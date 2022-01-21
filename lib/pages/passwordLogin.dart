@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:encode2/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PasswordLogin extends StatefulWidget {
   final Object? username;
@@ -13,6 +14,7 @@ class PasswordLogin extends StatefulWidget {
 }
 
 class _PasswordLoginState extends State<PasswordLogin> {
+
   late String password;
   bool showCircularIndicator = false;
   bool showLoginError = false;
@@ -23,12 +25,16 @@ class _PasswordLoginState extends State<PasswordLogin> {
     });
   }
 
+  late SharedPreferences prefs;
+  late String accessPref;
+  late String refreshPref;
+
   Future<void> loginUser() async {
     setState(() {
       showCircularIndicator=true;
       showLoginError=false;
     });
-    var res = await http.post("https://63fc-146-196-45-54.ngrok.io/auth/token/",
+    var res = await http.post("https://1d64-146-196-45-54.ngrok.io/auth/token/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -49,6 +55,9 @@ class _PasswordLoginState extends State<PasswordLogin> {
       print(tokens['access']);
       access = tokens['access'];
       refresh = tokens['refresh'];
+      prefs = await SharedPreferences.getInstance();
+      prefs.setString('accessPref',access);
+      prefs.setString('refreshPref',refresh);
       Navigator.of(context).pushNamed('/');
     }
   }

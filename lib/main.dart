@@ -9,7 +9,7 @@ void main() {
       ),
     ),
     debugShowCheckedModeBanner: false,
-    initialRoute: '/',
+    initialRoute: '/loginOptions',
     onGenerateRoute: RouteGenerator.generateRoute,
     )
   );

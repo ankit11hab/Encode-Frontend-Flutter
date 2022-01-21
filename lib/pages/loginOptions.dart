@@ -1,4 +1,7 @@
+import 'package:encode2/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginOptions extends StatefulWidget {
   const LoginOptions({Key? key}) : super(key: key);
@@ -9,11 +12,26 @@ class LoginOptions extends StatefulWidget {
 
 class _LoginOptionsState extends State<LoginOptions> {
   @override
+  late SharedPreferences prefs;
+  initState() {
+    super.initState();
+    init();
+  }
+  void init() async {
+    prefs = await SharedPreferences.getInstance();
+    access = (prefs.getString('accessPref')??"");
+    refresh = (prefs.getString('refreshPref')??"");
+    setState(() {
+      access;
+      refresh;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(15, 70, 10, 0),
+        padding: EdgeInsets.fromLTRB(15, 120, 10, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +42,7 @@ class _LoginOptionsState extends State<LoginOptions> {
                 width: 380,
               ),
             ),
-            SizedBox(height:40),
+            SizedBox(height:80),
             Padding(
               padding: const EdgeInsets.fromLTRB(10,0,0,0),
               child: Text(
@@ -36,7 +54,7 @@ class _LoginOptionsState extends State<LoginOptions> {
                 )
               ),
             ),
-            SizedBox(height:35),
+            SizedBox(height:65),
             FlatButton(
               onPressed: (){
                 Navigator.of(context).pushNamed('/usernameLogin');
@@ -83,7 +101,7 @@ class _LoginOptionsState extends State<LoginOptions> {
 
               ),
             ),
-            SizedBox(height:18),
+            Spacer(),
             Text(
               "This app has been developed by Ankit Guha,Suvayan Nath, Vighnesh Deshpande and Ayush Datta Jaiswal: TEAM SE.",
               style: TextStyle(
