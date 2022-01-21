@@ -32,42 +32,48 @@ class _CurrentBookingsState extends State<CurrentBookings> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for(var booking in bookings)
-                    Container(
-                        padding:EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Icon(
-                                  Icons.list,
-                                  color: Colors.blue[800],
-                                  size: 30
-                              ),
-                              SizedBox(width:18),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      booking["paymentId"].toString(),
-                                      style: TextStyle(
-                                          fontSize: 19
-                                      )
-                                  ),
-                                  SizedBox(height:3),
-                                  Text(
-                                      booking["busNumber"].toString(),
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      )
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                    ),
+                    GestureDetector(
+                      onTap:() {
+                        Navigator.of(context).pushNamed('/pass',arguments: booking['paymentID']);
+                      },
+                      child:Container(
+                          padding:EdgeInsets.fromLTRB(0, 5, 0, 5),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                Icon(
+                                    Icons.list,
+                                    color: Colors.blue[800],
+                                    size: 30
+                                ),
+                                SizedBox(width:18),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        booking["paymentID"].toString().substring(0,12),
+                                        style: TextStyle(
+                                            fontSize: 19
+                                        )
+                                    ),
+                                    SizedBox(height:3),
+                                    Text(
+                                        booking["busNumber"].toString(),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                        )
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                      ),
+                    )
+
 
                 ],
               ),

@@ -4,6 +4,7 @@ import 'package:encode2/pages/findbuses.dart';
 import 'package:encode2/pages/home.dart';
 import 'package:encode2/pages/login.dart';
 import 'package:encode2/pages/loginOptions.dart';
+import 'package:encode2/pages/pass.dart';
 import 'package:encode2/pages/passwordLogin.dart';
 import 'package:encode2/pages/usernameLogin.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,10 @@ class RouteGenerator {
         if(access=="")
           return MaterialPageRoute(builder: (_)=>LoginOptions());
         return MaterialPageRoute(builder: (_)=>BusDescription(busNumber:args));
+      case '/pass':
+        if(access=="")
+          return MaterialPageRoute(builder: (_)=>LoginOptions());
+        return MaterialPageRoute(builder: (_)=>PassQR(paymentID:args));
       case '/loginOptions':
         if(access!="")
           return MaterialPageRoute(builder: (_)=>Home());

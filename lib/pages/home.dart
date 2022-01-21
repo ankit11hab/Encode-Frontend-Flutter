@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   @override
   late final Future myFuture= getData();
   Future<int> getData() async {
-    var res1 = await http.post("https://1d64-146-196-45-54.ngrok.io/auth/get_profile/",
+    var res1 = await http.post("https://a4d0-146-196-45-54.ngrok.io/auth/get_profile/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
       currLat = position.latitude.toString();
       currLng = position.longitude.toString();
     });
-    var res2 = await http.post("https://1d64-146-196-45-54.ngrok.io/geo/decode_latlang/",
+    var res2 = await http.post("https://a4d0-146-196-45-54.ngrok.io/geo/decode_latlang/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
         currLocation1=m['plus_code']['compound_code'];
       });
     }
-    var res3 = await http.post("https://1d64-146-196-45-54.ngrok.io/passenger/history/",
+    var res3 = await http.post("https://a4d0-146-196-45-54.ngrok.io/passenger/history/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
         travelHistory = m;
       });
     }
-    var res4 = await http.post("https://1d64-146-196-45-54.ngrok.io/passenger/active/",
+    var res4 = await http.post("https://a4d0-146-196-45-54.ngrok.io/passenger/active/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
