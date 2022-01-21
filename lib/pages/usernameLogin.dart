@@ -26,7 +26,7 @@ class _UsernameLoginState extends State<UsernameLogin> {
       showUsernameValError = false;
       showCircularIndicator = true;
     });
-    var res = await http.post("https://a4d0-146-196-45-54.ngrok.io/auth/check_username_exists/",
+    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/auth/check_username_exists/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
