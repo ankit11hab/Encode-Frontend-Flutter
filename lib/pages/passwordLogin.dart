@@ -34,7 +34,7 @@ class _PasswordLoginState extends State<PasswordLogin> {
       showCircularIndicator=true;
       showLoginError=false;
     });
-    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/auth/token/",
+    var res = await http.post(urlF+"auth/token/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -58,6 +58,8 @@ class _PasswordLoginState extends State<PasswordLogin> {
       prefs = await SharedPreferences.getInstance();
       prefs.setString('accessPref',access);
       prefs.setString('refreshPref',refresh);
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
       Navigator.of(context).pushNamed('/');
     }
   }

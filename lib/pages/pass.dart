@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class PassQR extends StatefulWidget {
   final Object? paymentID;
@@ -47,6 +48,16 @@ class _PassQRState extends State<PassQR> {
                   ],
                 )
               )
+            ),
+            Center(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 140, 0, 30),
+                child: QrImage(
+                  data: widget.paymentID.toString(),
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ),
+              ),
             )
           ],
         )

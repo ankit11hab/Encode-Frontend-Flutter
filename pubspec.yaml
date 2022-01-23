@@ -42,6 +42,8 @@ dev_dependencies:
   http: ^0.12.1
   shared_preferences: ^2.0.12
   geolocator: ^8.0.3
+  qr_flutter: ^4.0.0
+  razorpay_flutter: ^1.2.9
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

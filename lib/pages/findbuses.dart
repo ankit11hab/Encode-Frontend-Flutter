@@ -18,7 +18,7 @@ class _FindBusesState extends State<FindBuses> {
   late final Future myFuture= getBuses();
   List<dynamic> buses=[];
   Future<int> getBuses() async {
-    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/driver/get/buses/",
+    var res = await http.post(urlF+"driver/get/buses/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -82,7 +82,12 @@ class _FindBusesState extends State<FindBuses> {
             FutureBuilder(
               builder: (context,snapshot) {
                 if(!snapshot.hasData) {
-                  return CircularProgressIndicator();
+                  return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(40),
+                        child: CircularProgressIndicator(),
+                      )
+                  );
                 }
                 else if(snapshot.hasData) {
                   return Container(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encode2/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +27,7 @@ class _UsernameLoginState extends State<UsernameLogin> {
       showUsernameValError = false;
       showCircularIndicator = true;
     });
-    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/auth/check_username_exists/",
+    var res = await http.post(urlF +"auth/check_username_exists/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

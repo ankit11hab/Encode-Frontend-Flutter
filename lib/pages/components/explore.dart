@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:encode2/constants.dart';
 import 'package:encode2/pages/components/currentbookings.dart';
 import 'package:encode2/pages/components/currentlocation.dart';
@@ -30,7 +31,7 @@ class _ExploreState extends State<Explore> {
       });
     }
     if(val!="") {
-      var res = await http.post("https://27e8-146-196-45-54.ngrok.io/geo/autocomplete/",
+      var res = await http.post(urlF+"geo/autocomplete/",
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $access',
@@ -58,13 +59,35 @@ class _ExploreState extends State<Explore> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Welcome $first_name,",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 46,
-                      fontFamily: "Dongle"
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "Welcome $first_name,",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 46,
+                          fontFamily: "Dongle"
+                        ),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: ()async{
+                          late SharedPreferences prefs;
+                          prefs = await SharedPreferences.getInstance();
+                          prefs.setString("accessPref","");
+                          prefs.setString("refreshPref","");
+                          setState(() {
+                            access="";
+                            refresh="";
+                          });
+                          Navigator.of(context).pushNamed('/loginOptions');
+                        },
+                        child: Icon(
+                          Icons.logout,
+                          color: Colors.lightBlue
+                        ),
+                      )
+                    ],
                   ),
                   Transform.translate(
                     offset: Offset(0,-25),
@@ -182,6 +205,7 @@ class _ExploreState extends State<Explore> {
                                     :
                                     Center(
                                       child: Container(
+                                        padding: EdgeInsets.fromLTRB(10, 0, 0, 20),
                                         height: 20,
                                         width: 20,
                                         child: CircularProgressIndicator()
@@ -190,7 +214,7 @@ class _ExploreState extends State<Explore> {
                               )
                               :
                           SizedBox(),
-                          (currentBooks.length!=0)?CurrentBookings():SizedBox(),
+                          CurrentBookings(),
                           SizedBox(height:30),
                           Text(
                               "Travel History",

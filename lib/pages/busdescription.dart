@@ -4,6 +4,7 @@ import 'package:encode2/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class BusDescription extends StatefulWidget {
   final Object? busNumber;
@@ -14,11 +15,60 @@ class BusDescription extends StatefulWidget {
 }
 
 class _BusDescriptionState extends State<BusDescription> {
+
+  late Razorpay razorpay;
   @override
+  void initState() {
+    super.initState();
+    razorpay = new Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentFailure);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    razorpay.clear();
+  }
+
+  void openCheckout() {
+    var options = {
+      "key" : "rzp_test_11LV9V2xBmW3uJ",
+      "amount" : 1000,
+      "name" : "BusEncode",
+      "description" : "Bus booking",
+      "prefill" : {
+        "contact" : "9378063452",
+         "email" : "ankit11hab@gmail.com",
+      },
+      "external" : {
+        "wallets" : ["paytm"],
+      }
+    };
+    try{
+      razorpay.open(options);
+      bookTicket();
+    }catch(e) {
+      print(e.toString());
+    }
+  }
+
+  void handlePaymentSuccess() {
+    print("Payment Success");
+  }
+
+  void handlePaymentFailure() {
+    print("Payment Failure");
+  }
+
+  void handleExternalWallet() {
+    print("External Wallet");
+  }
+
   late final Future myFuture= getBusDescription();
   List<dynamic> routes=[];
   Future<void> bookTicket() async{
-    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/driver/book/",
+    var res = await http.post(urlF+"driver/book/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -30,7 +80,7 @@ class _BusDescriptionState extends State<BusDescription> {
       Navigator.of(context).pushNamed('/');
   }
   Future<int> getBusDescription() async {
-    var res = await http.post("https://27e8-146-196-45-54.ngrok.io/driver/get/bus/",
+    var res = await http.post(urlF+"driver/get/bus/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $access',
@@ -96,7 +146,10 @@ class _BusDescriptionState extends State<BusDescription> {
             FutureBuilder(
               builder: (context,snapshot) {
                 if(!snapshot.hasData) {
-                  return CircularProgressIndicator();
+                  return Center(child: Padding(
+                    padding: const EdgeInsets.all(40),
+                    child: CircularProgressIndicator(),
+                  ));
                 }
                 else if(snapshot.hasData) {
                   return Container(
@@ -158,7 +211,7 @@ class _BusDescriptionState extends State<BusDescription> {
                             ),
                           SizedBox(height:175),
                           FlatButton(
-                            onPressed: bookTicket,
+                            onPressed: openCheckout,
                             child: Text("Book a Ticket",
                                 style: TextStyle(
                                   color: Colors.white,
